@@ -1,0 +1,4 @@
+* to fix
+ - fix comments in deploy scripts
+ - find out issue with stake events page
+ - confusion on currently selected contract in debug page
