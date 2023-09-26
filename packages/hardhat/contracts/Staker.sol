@@ -32,6 +32,8 @@ contract Staker {
   // After some `deadline` allow anyone to call an `execute()` function
   // If the deadline has passed and the threshold is met, it should call `exampleExternalContract.complete{value: address(this).balance}()`
 
+  // If the `threshold` was not met, allow everyone to call a `withdraw()` function to withdraw their balance
+
   function execute () public {
 
     if (block.timestamp <= deadline) return;
@@ -53,12 +55,15 @@ contract Staker {
     balances[msg.sender] -= _senderBalance;
   }
 
-  // If the `threshold` was not met, allow everyone to call a `withdraw()` function to withdraw their balance
-
-
   // Add a `timeLeft()` view function that returns the time left before the deadline for the frontend
-
+  function timeLeft() public view returns (uint256) {
+    return deadline < block.timestamp ? 0 : deadline - block.timestamp;
+  }
+  
 
   // Add the `receive()` special function that receives eth and calls stake()
+  receive() external payable {
+    stake();
+  }
 
 }

@@ -1,3 +1,6 @@
+* todo
+ - checkpoint 3 side quests
+
 * to fix
  - fix comments in deploy scripts
  - find out issue with stake events page
