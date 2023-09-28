@@ -11,6 +11,7 @@ contract Staker {
   uint public constant threshold = 1 ether;
   uint256 public deadline = block.timestamp + 30 seconds;
   bool public openForWithdraw = false;
+  bool private executed = false;
 
   event Stake(address sender, uint256 amount);
   
@@ -18,10 +19,28 @@ contract Staker {
       exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
   }
 
+  modifier executeOnce () {
+    if (block.timestamp <= deadline) return;
+    require(!executed, "CAN ONLY EXECUTE ONCE");
+    _;
+    executed = true;
+  }
+
+  modifier onlyBeforeDeadline () {
+    require(block.timestamp <= deadline, "ONLY ALLOWED BEFORE DEADLINE");
+    _;
+  }
+
+  modifier notCompleted () {
+    require(!exampleExternalContract.completed(), "ALREADY COMPLETED");
+    _;
+  }
+  
+
   // Collect funds in a payable `stake()` function and track individual `balances` with a mapping:
   // (Make sure to add a `Stake(address,uint256)` event and emit it for the frontend `All Stakings` tab to display)
 
-  function stake () public payable {
+  function stake () public payable onlyBeforeDeadline notCompleted {
 
     balances[msg.sender] += msg.value;  // each new record initialized by zero
     emit Stake(msg.sender, msg.value);
@@ -34,9 +53,7 @@ contract Staker {
 
   // If the `threshold` was not met, allow everyone to call a `withdraw()` function to withdraw their balance
 
-  function execute () public {
-
-    if (block.timestamp <= deadline) return;
+  function execute () public executeOnce notCompleted {
 
     if (address(this).balance >= threshold) {
       exampleExternalContract.complete{value: address(this).balance}();
@@ -46,7 +63,7 @@ contract Staker {
 
   }
 
-  function withdraw () public {
+  function withdraw () public notCompleted {
     require(openForWithdraw, "NOT OPEN FOR WITHDRAWAL");
 
     uint256 _senderBalance = balances[msg.sender];

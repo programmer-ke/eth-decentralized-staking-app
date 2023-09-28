@@ -1,5 +1,5 @@
 * todo
- - checkpoint 3 side quests
+ - [X] checkpoint 3 side quests
 
 * to fix
  - fix comments in deploy scripts
