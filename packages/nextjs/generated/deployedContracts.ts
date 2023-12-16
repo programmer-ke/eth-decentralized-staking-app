@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         ExampleExternalContract: {
-          address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+          address: "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
           abi: [
             {
               inputs: [],
@@ -30,7 +30,7 @@ const contracts = {
           ],
         },
         Staker: {
-          address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+          address: "0x59b670e9fA9D0A427751Af201D676719a970857b",
           abi: [
             {
               inputs: [
@@ -123,6 +123,13 @@ const contracts = {
             {
               inputs: [],
               name: "execute",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "generateBlocks",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",

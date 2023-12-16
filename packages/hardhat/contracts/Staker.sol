@@ -11,6 +11,9 @@ contract Staker {
   uint public constant threshold = 1 ether;
   uint256 public deadline = block.timestamp + 30 seconds;
 
+  // a variable to increment so that we can generate blocks hardhat network.
+  uint private count;
+
   event Stake(address sender, uint256 amount);
   
   /// An enumeration of possible states + state variable to track the current one
@@ -100,6 +103,13 @@ contract Staker {
   /// Allows funds sent directly to the contract to be automatically staked
   receive() external payable {
     stake();
+  }
+
+  /// Dummy block generator for the local network
+  /// We need to write to the local network to generate new blocks
+  /// used for timestamp comparisons
+  function generateBlocks() public {
+    count += 1;
   }
 
 }
