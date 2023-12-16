@@ -7,7 +7,7 @@ Instead of having state logic spread across multiple modifiers and
 state variables, we use a single state variable to track the current
 state and execute transition logic based on its value.
 
-We define there states for the Staker: `Opened`, `Completed` &
+We define three states for the Staker: `Opened`, `Completed` &
 `OpenForWithdrawals`.
 
 This state will be manipulated by the event handling logic for each
